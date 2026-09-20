@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resendApiKey = process.env.RESEND_API_KEY as string;
+const resend = new Resend(resendApiKey);
 
 export async function POST(request: Request) {
   try {
@@ -35,48 +38,29 @@ export async function POST(request: Request) {
       <p>${message.replace(/\n/g, "<br/>")}</p>
     `;
 
-    const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
-    const smtpPort = parseInt(process.env.SMTP_PORT || "465");
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-
-    if (smtpUser && smtpPass) {
-      const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: smtpPort,
-        secure: smtpPort === 465,
-        auth: {
-          user: smtpUser,
-          pass: smtpPass,
-        },
-      });
-
-      await transporter.sendMail({
-        from: \`"VERGE Contact" <\${smtpUser}>\`,
+    try {
+      const { data, error } = await resend.emails.send({
+        from: "onboarding@resend.dev",
         to: recipientEmail,
-        replyTo: email,
-        subject: \`📩 New Inquiry: \${topic || "General"} — \${fullName}\`,
+        reply_to: email,
+        subject: `📩 New Inquiry: ${topic || "General"} — ${fullName}`,
         text: plainTextContent,
         html: htmlContent,
       });
 
-      console.log(\`[Contact Email] Message from \${fullName} sent successfully to \${recipientEmail}\`);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      console.log(`[Contact Email] Message from ${fullName} sent successfully to ${recipientEmail}`);
 
       return NextResponse.json({
         success: true,
         message: "Message sent successfully.",
       });
-    } else {
-      console.log(
-        \`[Contact Email Simulation] Message from \${fullName} to \${recipientEmail}. \n` +
-        \`To send real emails, set SMTP_USER and SMTP_PASS in .env.local\`
-      );
-
-      return NextResponse.json({
-        success: true,
-        simulated: true,
-        message: "Message processed. Configure SMTP_USER and SMTP_PASS for live delivery.",
-      });
+    } catch (err: any) {
+      console.error("[Contact Email Error]", err);
+      throw err; // throw to outer catch block
     }
   } catch (error: any) {
     console.error("[Contact Email Error]", error);

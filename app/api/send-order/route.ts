@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { CartItem } from "@/context/CartContext";
 import { CustomerDetails } from "@/lib/whatsapp";
+
+const resendApiKey = process.env.RESEND_API_KEY as string;
+const resend = new Resend(resendApiKey);
 
 export async function POST(request: Request) {
   try {
@@ -145,31 +148,19 @@ export async function POST(request: Request) {
       items.map((i, idx) => `${idx + 1}. ${i.name} (${i.size}) x${i.qty} - ${i.price}`).join("\n") +
       `\n\nTOTAL AMOUNT: ${totalStr}`;
 
-    // Check if SMTP credentials exist in environment variables
-    const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
-    const smtpPort = parseInt(process.env.SMTP_PORT || "465");
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-
-    if (smtpUser && smtpPass) {
-      const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: smtpPort,
-        secure: smtpPort === 465,
-        auth: {
-          user: smtpUser,
-          pass: smtpPass,
-        },
-      });
-
-      await transporter.sendMail({
-        from: `"VERGE Orders" <${smtpUser}>`,
+    try {
+      const { data, error } = await resend.emails.send({
+        from: "onboarding@resend.dev",
         to: recipientEmail,
-        replyTo: customerDetails.email || recipientEmail,
+        reply_to: customerDetails.email || recipientEmail,
         subject: `🛒 New Order ${orderId} — ${customerDetails.fullName} (${totalStr})`,
         text: plainTextContent,
         html: htmlContent,
       });
+
+      if (error) {
+        throw new Error(error.message);
+      }
 
       console.log(`[Order Email] Order ${orderId} sent successfully to ${recipientEmail}`);
 
@@ -180,21 +171,9 @@ export async function POST(request: Request) {
         emailSent: true,
         message: `Order email sent successfully to ${recipientEmail}`,
       });
-    } else {
-      // Log for developer awareness when SMTP credentials are not configured yet
-      console.log(
-        `[Order Email Simulation] Order ${orderId} created for ${recipientEmail}.\n` +
-        `To send real emails, set SMTP_USER and SMTP_PASS in .env.local`
-      );
-
-      return NextResponse.json({
-        success: true,
-        orderId,
-        recipient: recipientEmail,
-        emailSent: false,
-        simulated: true,
-        message: `Order processed for ${recipientEmail}. Configure SMTP_USER and SMTP_PASS in .env.local for live SMTP delivery.`,
-      });
+    } catch (err: any) {
+      console.error("[Order Email Error]", err);
+      throw err; // throw to outer catch block
     }
   } catch (error: any) {
     console.error("[Order Email Error]", error);

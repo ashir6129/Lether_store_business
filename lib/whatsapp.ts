@@ -11,7 +11,6 @@ import { CartItem } from "@/context/CartContext";
  */
 export const WHATSAPP_NUMBERS = [
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER_1 || "923241732509",
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER_2 || "923189102236",
 ];
 
 // Single export for backward compatibility
