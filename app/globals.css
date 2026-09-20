@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* ─── Brand Tokens ────────────────────────────────────────────────────────── */
+:root {
+  --bg:          #F4EDE3;
+  --bg-alt:      #EBE2D5;
+  --bg-card:     #F9F5F0;
+  --heading:     #18120E;
+  --body:        rgba(24, 18, 14, 0.60);
+  --muted:       rgba(24, 18, 14, 0.38);
+  --accent:      #18120E;
+  --brass:       #A8813E;
+  --brass-light: #C9A96E;
+  --border:      rgba(24, 18, 14, 0.10);
+  --border-strong: rgba(24, 18, 14, 0.18);
+  --font-display: var(--font-display), "Georgia", serif;
+  --font-body:    var(--font-body), system-ui, sans-serif;
+  --radius:       2px;
+  --shadow-sm:    0 1px 3px rgba(24,18,14,0.07), 0 1px 2px rgba(24,18,14,0.04);
+  --shadow-md:    0 4px 16px rgba(24,18,14,0.09), 0 2px 6px rgba(24,18,14,0.06);
+  --shadow-lg:    0 12px 40px rgba(24,18,14,0.12), 0 4px 12px rgba(24,18,14,0.06);
+}
+
+/* ─── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg);
+  color: var(--heading);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font-family: inherit; }
+
+/* ─── Typography ──────────────────────────────────────────────────────────── */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--heading);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--heading);
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.label-brass {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* ─── Brass accent elements ───────────────────────────────────────────────── */
+.brass-rule {
+  display: block;
+  width: 36px;
+  height: 1.5px;
+  background: var(--brass);
+  margin-bottom: 1.5rem;
+}
+
+.brass-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brass);
+  margin: 0 0.6rem;
+  vertical-align: middle;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  border-radius: var(--radius);
+}
+
+.btn-dark {
+  background: var(--heading);
+  color: var(--bg);
+  padding: 1rem 2.5rem;
+}
+.btn-dark:hover { background: #2e2318; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--heading);
+  padding: 0.95rem 2.25rem;
+  border: 1.5px solid var(--border-strong);
+}
+.btn-outline:hover { border-color: var(--heading); transform: translateY(-1px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--body);
+  padding: 0.5rem 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+.btn-ghost:hover { color: var(--heading); border-color: var(--brass); }
+
+/* ─── Film grain ──────────────────────────────────────────────────────────── */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.028;
+  mix-blend-mode: multiply;
+}
+
+/* ─── Fade-in animation for sections ─────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.15s; }
+.fade-up-3 { animation-delay: 0.25s; }
+.fade-up-4 { animation-delay: 0.38s; }
+
+/* ─── Scroll cue animation ────────────────────────────────────────────────── */
+@keyframes scrollCue {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 0.6; }
+  45%  { transform: scaleY(1); transform-origin: top; opacity: 0.6; }
+  55%  { transform: scaleY(1); transform-origin: bottom; opacity: 0.6; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* ─── Letterbox bars (cinematic framing) ─────────────────────────────────── */
+.lbx-top, .lbx-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  height: 5vh;
+  background: var(--bg);
+  z-index: 4;
+  pointer-events: none;
+}
+.lbx-top    { top: 0; }
+.lbx-bottom { bottom: 0; }
+
+/* ─── Responsive utilities ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: flex !important; }
+}
+@media (min-width: 769px) {
+  .show-mobile { display: none !important; }
+}
