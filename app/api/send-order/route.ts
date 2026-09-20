@@ -152,7 +152,7 @@ export async function POST(request: Request) {
       const { data, error } = await resend.emails.send({
         from: "onboarding@resend.dev",
         to: recipientEmail,
-        reply_to: customerDetails.email || recipientEmail,
+        replyTo: customerDetails.email || recipientEmail,
         subject: `🛒 New Order ${orderId} — ${customerDetails.fullName} (${totalStr})`,
         text: plainTextContent,
         html: htmlContent,
