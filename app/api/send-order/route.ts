@@ -3,11 +3,10 @@ import { Resend } from "resend";
 import { CartItem } from "@/context/CartContext";
 import { CustomerDetails } from "@/lib/whatsapp";
 
-const resendApiKey = process.env.RESEND_API_KEY as string;
-const resend = new Resend(resendApiKey);
-
 export async function POST(request: Request) {
   try {
+    const resendApiKey = process.env.RESEND_API_KEY as string;
+    const resend = new Resend(resendApiKey);
     const body = await request.json();
     const { items, totalStr, customerDetails, discountPercentage } = body as {
       items: CartItem[];
