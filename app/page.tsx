@@ -26,62 +26,23 @@ export default function Home() {
       {/* ────────────────────────────────────────────────────────────────────
           HERO
       ──────────────────────────────────────────────────────────────────── */}
-      <section
-        style={{
-          position: "relative",
-          height: "100svh",
-          minHeight: "640px",
-          background: "#18120e",
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "flex-end",
-        }}
-      >
-        {/* Full-bleed lifestyle image */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 0,
-          }}
-        >
+      <section className="hero-section">
+        {/* IMAGE BACKGROUND (Right Aligned on Desktop) */}
+        <div className="hero-image-wrapper">
           <Image
             src="/images/home-hero.jpg"
             alt="Verge Studio Leather Outerwear"
             fill
             priority
-            sizes="100vw"
-            quality={100}
-            style={{ objectFit: "cover", objectPosition: "center 35%" }}
+            unoptimized={true}
+            style={{ objectFit: "cover", objectPosition: "center 30%" }}
           />
-          {/* Subtle vignette/gradient for text legibility */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(to right, rgba(24, 18, 14, 0.85) 0%, rgba(24, 18, 14, 0.1) 60%, transparent 100%)",
-            }}
-          />
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "linear-gradient(to top, rgba(24, 18, 14, 0.95) 0%, rgba(24, 18, 14, 0.3) 40%, transparent 100%)",
-            }}
-          />
+          <div className="hero-fade-desktop" aria-hidden />
+          <div className="hero-fade-mobile" aria-hidden />
         </div>
 
-        {/* Copy — bottom-left */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 2,
-            padding: "0 clamp(1.25rem, 6vw, 5rem) clamp(3rem, 6vh, 5rem)",
-            maxWidth: "750px",
-          }}
-        >
+        {/* TEXT CONTENT (Left Aligned on Desktop) */}
+        <div className="hero-content">
           <p
             className="label-brass fade-up fade-up-1"
             style={{ display: "block", marginBottom: "1.25rem", color: "var(--brass)", textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}
@@ -89,49 +50,20 @@ export default function Home() {
             Handcrafted — Full-Grain Leather & Goods
           </p>
           <h1
-            className="fade-up fade-up-2"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(3.2rem, 8vw, 6.5rem)",
-              fontWeight: 400,
-              letterSpacing: "-0.04em",
-              lineHeight: 0.98,
-              color: "#ffffff",
-              marginBottom: "1.5rem",
-              textShadow: "0 4px 20px rgba(0,0,0,0.6)",
-            }}
+            className="fade-up fade-up-2 hero-heading"
           >
             Built for<br />the Long Haul.
           </h1>
           <p
-            className="fade-up fade-up-3"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
-              fontWeight: 400,
-              lineHeight: 1.6,
-              color: "rgba(255, 255, 255, 0.9)",
-              marginBottom: "2.5rem",
-              maxWidth: "520px",
-              textShadow: "0 2px 10px rgba(0,0,0,0.6)",
-            }}
+            className="fade-up fade-up-3 hero-subcopy"
           >
             Full-grain hides, solid brass hardware, and uncompromising craftsmanship. Outerwear, footwear, and artisan goods built to break in, not break down.
           </p>
-          <div
-            className="fade-up fade-up-4"
-            style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}
-          >
-            <Link 
-              href="/products" 
-              className="hero-btn-primary"
-            >
+          <div className="fade-up fade-up-4 hero-buttons">
+            <Link href="/products" className="hero-btn-primary">
               Shop All Products
             </Link>
-            <Link 
-              href="/categories/jackets" 
-              className="hero-btn-outline"
-            >
+            <Link href="/categories/jackets" className="hero-btn-outline">
               Explore Jackets
             </Link>
           </div>
@@ -383,6 +315,91 @@ export default function Home() {
       </section>
 
       <style>{`
+        .hero-section {
+          position: relative;
+          height: 100svh;
+          min-height: 640px;
+          background: #18120e;
+          display: flex;
+          align-items: center;
+        }
+
+        .hero-image-wrapper {
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 55%;
+          z-index: 0;
+        }
+
+        .hero-fade-desktop {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to right, #18120e 0%, transparent 35%);
+        }
+
+        .hero-fade-mobile {
+          display: none;
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, #18120e 0%, transparent 40%);
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 2;
+          padding: 0 clamp(1.25rem, 6vw, 5rem);
+          max-width: 650px;
+        }
+
+        .hero-heading {
+          font-family: var(--font-display);
+          font-size: clamp(3.2rem, 7vw, 6rem);
+          font-weight: 400;
+          letter-spacing: -0.04em;
+          line-height: 0.98;
+          color: #ffffff;
+          margin-bottom: 1.5rem;
+        }
+
+        .hero-subcopy {
+          font-family: var(--font-body);
+          font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+          font-weight: 400;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.85);
+          margin-bottom: 2.5rem;
+          max-width: 480px;
+        }
+
+        .hero-buttons {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+          align-items: center;
+        }
+
+        @media (max-width: 768px) {
+          .hero-section {
+            align-items: flex-end;
+          }
+          .hero-image-wrapper {
+            width: 100%;
+            height: 100%;
+          }
+          .hero-fade-desktop {
+            background: linear-gradient(to right, rgba(24,18,14,0.6) 0%, transparent 100%);
+          }
+          .hero-fade-mobile {
+            display: block;
+          }
+          .hero-content {
+            padding-bottom: 3rem;
+            max-width: 100%;
+          }
+        }
+
         .hero-btn-primary {
           display: inline-flex;
           align-items: center;
