@@ -75,7 +75,7 @@ export default function WhatsAppCheckoutModal({
       notes: notes.trim(),
     };
 
-    // 1. Send Order Email via API Route to ashiryeyy@gmail.com
+    // 1. Send Order Email via API Route to ashir6129@gmail.com
     try {
       const res = await fetch("/api/send-order", {
         method: "POST",
@@ -129,7 +129,7 @@ export default function WhatsAppCheckoutModal({
     city: city.trim(),
     notes: notes.trim(),
   }, discountPercentage));
-  const mailtoUrl = `mailto:ashiryeyy@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+  const mailtoUrl = `mailto:ashir6129@gmail.com?subject=${mailSubject}&body=${mailBody}`;
 
   return (
     <div
@@ -229,7 +229,7 @@ export default function WhatsAppCheckoutModal({
                 marginBottom: "1.25rem",
               }}
             >
-              Your order invoice was sent simultaneously to <strong>WhatsApp (+92 324 1732509)</strong> and <strong>Email (ashiryeyy@gmail.com)</strong>.
+              Your order invoice was sent simultaneously to <strong>WhatsApp (+92 324 1732509)</strong> and <strong>Email (ashir6129@gmail.com)</strong>.
             </p>
 
             {/* Notification Status Badges */}
@@ -276,7 +276,7 @@ export default function WhatsAppCheckoutModal({
               >
                 <span>✉️</span>
                 <div>
-                  <strong>Order Email Dispatched</strong> to ashiryeyy@gmail.com
+                  <strong>Order Email Dispatched</strong> to ashir6129@gmail.com
                 </div>
               </div>
             </div>
@@ -381,7 +381,7 @@ export default function WhatsAppCheckoutModal({
                 Delivery & Order Details
               </h3>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "var(--muted)", marginTop: "0.25rem" }}>
-                With one click, your order invoice will be sent directly to <strong>WhatsApp (+92 324 1732509)</strong> and <strong>Email (ashiryeyy@gmail.com)</strong>.
+                With one click, your order invoice will be sent directly to <strong>WhatsApp (+92 324 1732509)</strong> and <strong>Email (ashir6129@gmail.com)</strong>.
               </p>
             </div>
 
@@ -617,7 +617,7 @@ export default function WhatsAppCheckoutModal({
                 lineHeight: 1.5,
               }}
             >
-              Sends order invoice to WhatsApp (<strong>+92 324 1732509</strong>) and Email (<strong>ashiryeyy@gmail.com</strong>).
+              Sends order invoice to WhatsApp (<strong>+92 324 1732509</strong>) and Email (<strong>ashir6129@gmail.com</strong>).
             </div>
           </form>
         )}
