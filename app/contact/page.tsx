@@ -25,10 +25,33 @@ const FAQS = [
 export default function ContactPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    topic: "Sizing & Fit Advice",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -110,6 +133,8 @@ export default function ContactPage() {
                     <input
                       type="text"
                       required
+                      value={formData.fullName}
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       placeholder="e.g. Julian Thorne"
                       style={{
                         width: "100%",
@@ -132,6 +157,8 @@ export default function ContactPage() {
                     <input
                       type="email"
                       required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="julian@example.com"
                       style={{
                         width: "100%",
@@ -152,6 +179,8 @@ export default function ContactPage() {
                       Inquiry Topic
                     </label>
                     <select
+                      value={formData.topic}
+                      onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                       style={{
                         width: "100%",
                         background: "var(--bg-card)",
@@ -179,6 +208,8 @@ export default function ContactPage() {
                     <textarea
                       required
                       rows={5}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="How can we assist you?"
                       style={{
                         width: "100%",
@@ -194,8 +225,8 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-dark" style={{ padding: "0.8rem", width: "100%" }}>
-                    Send Message
+                  <button type="submit" disabled={isLoading} className="btn btn-dark" style={{ padding: "0.8rem", width: "100%", opacity: isLoading ? 0.7 : 1 }}>
+                    {isLoading ? "Sending..." : "Send Message"}
                   </button>
                 </form>
               )}
