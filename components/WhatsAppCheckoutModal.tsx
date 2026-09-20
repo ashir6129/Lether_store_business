@@ -35,7 +35,7 @@ export default function WhatsAppCheckoutModal({
 
   const orderTotal = finalTotalStr || total;
 
-  const handleOneClickCheckout = async (e: React.FormEvent) => {
+  const handleOneClickCheckout = async (e: React.FormEvent | React.MouseEvent, method: "whatsapp" | "email") => {
     e.preventDefault();
     setErrorMessage("");
 
@@ -99,22 +99,24 @@ export default function WhatsAppCheckoutModal({
       setEmailStatus("error");
     }
 
-    // 2. Generate WhatsApp URLs and open target number +92 324 1732509
-    const targets = getWhatsAppCheckoutUrls(
-      items,
-      orderTotal,
-      customerDetails,
-      discountPercentage
-    );
+    if (method === "whatsapp") {
+      // 2. Generate WhatsApp URLs and open target number +92 324 1732509
+      const targets = getWhatsAppCheckoutUrls(
+        items,
+        orderTotal,
+        customerDetails,
+        discountPercentage
+      );
 
-    setWhatsappTargets(targets);
+      setWhatsappTargets(targets);
 
-    // Open WhatsApp tab for primary number +92 324 1732509
-    targets.forEach((target, index) => {
-      setTimeout(() => {
-        window.open(target.url, "_blank", "noopener,noreferrer");
-      }, index * 250);
-    });
+      // Open WhatsApp tab for primary number +92 324 1732509
+      targets.forEach((target, index) => {
+        setTimeout(() => {
+          window.open(target.url, "_blank", "noopener,noreferrer");
+        }, index * 250);
+      });
+    }
 
     setIsSubmitting(false);
   };
@@ -572,41 +574,77 @@ export default function WhatsAppCheckoutModal({
               </div>
             </div>
 
-            {/* Submit Button: 1-Click Order to WhatsApp & Email */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="whatsapp-btn"
-              style={{
-                width: "100%",
-                padding: "1rem",
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                letterSpacing: "0.06em",
-                borderRadius: "4px",
-                border: "none",
-                background: isSubmitting ? "#1b9e4b" : "#25D366",
-                color: "#ffffff",
-                cursor: isSubmitting ? "not-allowed" : "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.65rem",
-                boxShadow: "0 6px 20px rgba(37, 211, 102, 0.28)",
-                transition: "all 0.25s ease",
-              }}
-            >
-              {isSubmitting ? (
-                <span>Sending Order to WhatsApp & Email...</span>
-              ) : (
-                <>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.157 4.228 4.276-1.121z" />
-                  </svg>
-                  <span>1-Click Order: Send to WhatsApp & Email — {orderTotal}</span>
-                </>
-              )}
-            </button>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <button
+                type="button"
+                onClick={(e) => handleOneClickCheckout(e, "whatsapp")}
+                disabled={isSubmitting}
+                className="whatsapp-btn"
+                style={{
+                  width: "100%",
+                  padding: "0.85rem",
+                  background: "#25d366",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  cursor: isSubmitting ? "not-allowed" : "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.65rem",
+                  boxShadow: "0 6px 20px rgba(37, 211, 102, 0.28)",
+                  transition: "all 0.25s ease",
+                }}
+              >
+                {isSubmitting ? (
+                  <span>Processing...</span>
+                ) : (
+                  <>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.157 4.228 4.276-1.121z" />
+                    </svg>
+                    <span>Complete Order via WhatsApp — {orderTotal}</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={(e) => handleOneClickCheckout(e, "email")}
+                disabled={isSubmitting}
+                className="email-btn"
+                style={{
+                  width: "100%",
+                  padding: "0.85rem",
+                  background: "#2a221b",
+                  color: "#d4c5b3",
+                  border: "1px solid #c8a064",
+                  borderRadius: "8px",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  cursor: isSubmitting ? "not-allowed" : "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.65rem",
+                  transition: "all 0.25s ease",
+                }}
+              >
+                {isSubmitting ? (
+                  <span>Processing...</span>
+                ) : (
+                  <>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <span>Complete Order via Email Only</span>
+                  </>
+                )}
+              </button>
+            </div>
 
             <div
               style={{
@@ -630,6 +668,13 @@ export default function WhatsAppCheckoutModal({
           box-shadow: 0 8px 24px rgba(37, 211, 102, 0.38) !important;
         }
         .whatsapp-btn:active:not(:disabled) {
+          transform: translateY(0);
+        }
+        .email-btn:hover:not(:disabled) {
+          background: #332a22 !important;
+          transform: translateY(-1px);
+        }
+        .email-btn:active:not(:disabled) {
           transform: translateY(0);
         }
       `}</style>

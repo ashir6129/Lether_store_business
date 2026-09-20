@@ -31,6 +31,7 @@ export async function POST(request: Request) {
     });
 
     // Generate HTML Email Content
+    const hostUrl = request.headers.get("origin") || "https://tripplefiveleather.netlify.app";
     const itemsHtml = items
       .map((item, idx) => {
         let customDetailsHtml = "";
@@ -47,15 +48,23 @@ export async function POST(request: Request) {
           `;
         }
 
+        const productLink = `${hostUrl}/products/${item.slug}`;
+        const imageUrl = item.image.startsWith("http") ? item.image : `${hostUrl}${item.image}`;
+
         return `
           <tr style="border-bottom: 1px solid #2e261f;">
-            <td style="padding: 12px 16px; color: #f4ede3; font-weight: 500;">
-              ${idx + 1}. ${item.name}
-              <div style="font-size: 12px; color: #a39585; margin-top: 2px;">Size: ${item.size}</div>
-              ${customDetailsHtml}
+            <td style="padding: 12px 16px; color: #f4ede3; font-weight: 500; display: flex; align-items: center; gap: 12px;">
+              <a href="${productLink}" target="_blank">
+                <img src="${imageUrl}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #c8a064;" />
+              </a>
+              <div>
+                <a href="${productLink}" target="_blank" style="color: #c8a064; text-decoration: none;">${idx + 1}. ${item.name}</a>
+                <div style="font-size: 12px; color: #a39585; margin-top: 2px;">Size: ${item.size}</div>
+                ${customDetailsHtml}
+              </div>
             </td>
-            <td style="padding: 12px 16px; color: #d4c5b3; text-align: center;">${item.qty}</td>
-            <td style="padding: 12px 16px; color: #d4c5b3; text-align: right;">${item.price}</td>
+            <td style="padding: 12px 16px; color: #d4c5b3; text-align: center; vertical-align: top;">${item.qty}</td>
+            <td style="padding: 12px 16px; color: #d4c5b3; text-align: right; vertical-align: top;">${item.price}</td>
           </tr>
         `;
       })
