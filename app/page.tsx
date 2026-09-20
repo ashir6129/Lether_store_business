@@ -31,52 +31,44 @@ export default function Home() {
           position: "relative",
           height: "100svh",
           minHeight: "640px",
-          background: "var(--bg)",
+          background: "#18120e",
           overflow: "hidden",
           display: "flex",
           alignItems: "flex-end",
         }}
       >
-        {/* Full-bleed product image — right-weighted */}
+        {/* Full-bleed lifestyle image */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
+            zIndex: 0,
           }}
         >
-          <div style={{ position: "relative", width: "62%", height: "100%", flexShrink: 0 }}>
-            <Image
-              src={heroJacket.images.hero}
-              alt={heroJacket.name}
-              fill
-              priority
-              sizes="62vw"
-              quality={90}
-              style={{ objectFit: "contain", objectPosition: "center bottom" }}
-            />
-          </div>
-          {/* Left fade */}
+          <Image
+            src="/images/home-hero.jpg"
+            alt="Verge Studio Leather Outerwear"
+            fill
+            priority
+            sizes="100vw"
+            quality={100}
+            style={{ objectFit: "cover", objectPosition: "center 35%" }}
+          />
+          {/* Subtle vignette/gradient for text legibility */}
           <div
             aria-hidden
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to right, var(--bg) 18%, rgba(244,237,227,0.6) 45%, transparent 70%)",
+              background: "linear-gradient(to right, rgba(24, 18, 14, 0.85) 0%, rgba(24, 18, 14, 0.1) 60%, transparent 100%)",
             }}
           />
-          {/* Bottom fade */}
           <div
             aria-hidden
             style={{
               position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "30%",
-              background: "linear-gradient(to bottom, transparent, var(--bg))",
+              inset: 0,
+              background: "linear-gradient(to top, rgba(24, 18, 14, 0.95) 0%, rgba(24, 18, 14, 0.3) 40%, transparent 100%)",
             }}
           />
         </div>
@@ -87,12 +79,12 @@ export default function Home() {
             position: "relative",
             zIndex: 2,
             padding: "0 clamp(1.25rem, 6vw, 5rem) clamp(3rem, 6vh, 5rem)",
-            maxWidth: "700px",
+            maxWidth: "750px",
           }}
         >
           <p
             className="label-brass fade-up fade-up-1"
-            style={{ display: "block", marginBottom: "1.25rem" }}
+            style={{ display: "block", marginBottom: "1.25rem", color: "var(--brass)", textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}
           >
             Handcrafted — Full-Grain Leather & Goods
           </p>
@@ -100,12 +92,13 @@ export default function Home() {
             className="fade-up fade-up-2"
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(3.2rem, 7.5vw, 6.5rem)",
+              fontSize: "clamp(3.2rem, 8vw, 6.5rem)",
               fontWeight: 400,
               letterSpacing: "-0.04em",
               lineHeight: 0.98,
-              color: "var(--heading)",
+              color: "#ffffff",
               marginBottom: "1.5rem",
+              textShadow: "0 4px 20px rgba(0,0,0,0.6)",
             }}
           >
             Built for<br />the Long Haul.
@@ -117,22 +110,60 @@ export default function Home() {
               fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
               fontWeight: 400,
               lineHeight: 1.6,
-              color: "var(--body)",
+              color: "rgba(255, 255, 255, 0.9)",
               marginBottom: "2.5rem",
               maxWidth: "520px",
+              textShadow: "0 2px 10px rgba(0,0,0,0.6)",
             }}
           >
-            Full-grain hides, solid brass hardware, and Portuguese craftsmanship. Outerwear, footwear, and artisan goods built to break in, not break down.
+            Full-grain hides, solid brass hardware, and uncompromising craftsmanship. Outerwear, footwear, and artisan goods built to break in, not break down.
           </p>
           <div
             className="fade-up fade-up-4"
             style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}
           >
-            <Link href="/products" className="btn btn-dark">
+            <Link 
+              href="/products" 
+              style={{
+                padding: "1rem 2rem",
+                background: "var(--brass)",
+                color: "#18120E",
+                textDecoration: "none",
+                fontWeight: 600,
+                fontSize: "1.05rem",
+                borderRadius: "4px",
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.filter = "brightness(1.1)")}
+              onMouseLeave={(e) => (e.currentTarget.style.filter = "brightness(1)")}
+            >
               Shop All Products
             </Link>
-            <Link href={`/products/${heroJacket.slug}`} className="btn btn-outline">
-              Explore The Voss — {heroJacket.price}
+            <Link 
+              href="/categories/jackets" 
+              style={{
+                padding: "1rem 2rem",
+                background: "transparent",
+                color: "#ffffff",
+                border: "1px solid rgba(255,255,255,0.4)",
+                textDecoration: "none",
+                fontWeight: 600,
+                fontSize: "1.05rem",
+                borderRadius: "4px",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                e.currentTarget.style.borderColor = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)";
+              }}
+            >
+              Explore Jackets
             </Link>
           </div>
         </div>
