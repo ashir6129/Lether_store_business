@@ -366,7 +366,7 @@ export default function WhatsAppCheckoutModal({
           </div>
         ) : (
           /* Main Customer Info & Dual Checkout Form */
-          <form onSubmit={handleOneClickCheckout} style={{ display: "flex", flexDirection: "column", gap: "1.15rem" }}>
+          <form onSubmit={(e) => handleOneClickCheckout(e, "whatsapp")} style={{ display: "flex", flexDirection: "column", gap: "1.15rem" }}>
             <div>
               <span className="label-brass" style={{ display: "block", marginBottom: "0.35rem" }}>
                 1-Click Order Concierge
