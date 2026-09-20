@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     const recipientEmail =
-      process.env.ORDER_NOTIFICATION_EMAIL || "ashiryeyy@gmail.com";
+      process.env.ORDER_NOTIFICATION_EMAIL || "ashir6129@gmail.com";
     const orderId = `VG-${Date.now().toString().slice(-6)}`;
     const orderDate = new Date().toLocaleString("en-GB", {
       dateStyle: "full",

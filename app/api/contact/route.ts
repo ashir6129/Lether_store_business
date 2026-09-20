@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     }
 
     const recipientEmail =
-      process.env.ORDER_NOTIFICATION_EMAIL || "ashiryeyy@gmail.com";
+      process.env.ORDER_NOTIFICATION_EMAIL || "ashir6129@gmail.com";
 
     const plainTextContent = `NEW CONTACT INQUIRY\n\n` +
       `From: ${fullName} (${email})\n` +
