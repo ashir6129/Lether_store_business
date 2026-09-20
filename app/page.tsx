@@ -124,44 +124,13 @@ export default function Home() {
           >
             <Link 
               href="/products" 
-              style={{
-                padding: "1rem 2rem",
-                background: "var(--brass)",
-                color: "#18120E",
-                textDecoration: "none",
-                fontWeight: 600,
-                fontSize: "1.05rem",
-                borderRadius: "4px",
-                letterSpacing: "0.05em",
-                textTransform: "uppercase",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.filter = "brightness(1.1)")}
-              onMouseLeave={(e) => (e.currentTarget.style.filter = "brightness(1)")}
+              className="hero-btn-primary"
             >
               Shop All Products
             </Link>
             <Link 
               href="/categories/jackets" 
-              style={{
-                padding: "1rem 2rem",
-                background: "transparent",
-                color: "#ffffff",
-                border: "1px solid rgba(255,255,255,0.4)",
-                textDecoration: "none",
-                fontWeight: 600,
-                fontSize: "1.05rem",
-                borderRadius: "4px",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.1)";
-                e.currentTarget.style.borderColor = "#fff";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)";
-              }}
+              className="hero-btn-outline"
             >
               Explore Jackets
             </Link>
@@ -414,6 +383,42 @@ export default function Home() {
       </section>
 
       <style>{`
+        .hero-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem 2rem;
+          background: var(--brass);
+          color: #18120E;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1.05rem;
+          border-radius: 4px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          transition: all 0.3s ease;
+        }
+        .hero-btn-primary:hover {
+          filter: brightness(1.1);
+        }
+        .hero-btn-outline {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem 2rem;
+          background: transparent;
+          color: #ffffff;
+          border: 1px solid rgba(255,255,255,0.4);
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1.05rem;
+          border-radius: 4px;
+          transition: all 0.3s ease;
+        }
+        .hero-btn-outline:hover {
+          background: rgba(255,255,255,0.1);
+          border-color: #fff;
+        }
         .category-card:hover {
           transform: translateY(-4px);
           border-color: var(--brass) !important;
