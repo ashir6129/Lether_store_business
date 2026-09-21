@@ -3,6 +3,7 @@ import Link from "next/link";
 import { products, getFeatured, getNew, getCategories } from "@/data/products";
 import ProductGrid from "@/components/ProductGrid";
 import FilmGrain from "@/components/FilmGrain";
+import HeroSlider from "@/components/HeroSlider";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,16 +30,7 @@ export default function Home() {
       <section className="hero-section">
         {/* IMAGE BACKGROUND (Right Aligned on Desktop) */}
         <div className="hero-image-wrapper">
-          <Image
-            src="/images/home-hero.jpg"
-            alt="Verge Studio Leather Outerwear"
-            fill
-            priority
-            unoptimized={true}
-            style={{ objectFit: "cover", objectPosition: "center 30%" }}
-          />
-          <div className="hero-fade-desktop" aria-hidden />
-          <div className="hero-fade-mobile" aria-hidden />
+          <HeroSlider />
         </div>
 
         {/* TEXT CONTENT (Left Aligned on Desktop) */}
