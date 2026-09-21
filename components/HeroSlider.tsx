@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const images = [
   "/images/home-hero.jpg",
-  "/images/hero-2.jpg", // Replace with the second image you provided
+  "/images/chatgpt-hero.png", // Replace with the second image you provided
 ];
 
 export default function HeroSlider() {
