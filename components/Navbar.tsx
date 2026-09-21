@@ -323,7 +323,7 @@ export default function Navbar() {
           text-transform: uppercase;
           text-decoration: none;
           color: inherit;
-          opacity: 0.7;
+          opacity: 1;
           padding-bottom: 2px;
           border-bottom: 1.5px solid transparent;
           transition: opacity 0.2s, border-color 0.2s;

@@ -44,6 +44,19 @@ export default function HeroSlider() {
       {/* Overlays for fading into the background */}
       <div className="hero-fade-desktop" aria-hidden style={{ zIndex: 1, position: "absolute", inset: 0 }} />
       <div className="hero-fade-mobile" aria-hidden style={{ zIndex: 1, position: "absolute", inset: 0 }} />
+
+      {/* Top Gradient for Navbar Visibility */}
+      <div 
+        aria-hidden 
+        style={{ 
+          zIndex: 1, 
+          position: "absolute", 
+          inset: "0 0 auto 0", 
+          height: "160px", 
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%)",
+          pointerEvents: "none"
+        }} 
+      />
     </div>
   );
 }
