@@ -20,6 +20,8 @@ export default function Navbar() {
   const { count, openCart }       = useCart();
   const router                   = useRouter();
 
+  const isBlend = !scrolled && !open && !searchOpen;
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48);
     window.addEventListener("scroll", fn, { passive: true });
@@ -41,11 +43,13 @@ export default function Navbar() {
           position: "fixed",
           inset: "0 0 auto",
           zIndex: 500,
-          transition: "background 0.4s ease, box-shadow 0.4s ease",
-          background: scrolled ? "rgba(244,237,227,0.94)" : "transparent",
-          backdropFilter: scrolled ? "blur(18px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(18px)" : "none",
-          boxShadow: scrolled ? "0 1px 0 rgba(24,18,14,0.08)" : "none",
+          transition: "background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease",
+          background: !isBlend ? "rgba(244,237,227,0.94)" : "transparent",
+          backdropFilter: !isBlend ? "blur(18px)" : "none",
+          WebkitBackdropFilter: !isBlend ? "blur(18px)" : "none",
+          boxShadow: !isBlend ? "0 1px 0 rgba(24,18,14,0.08)" : "none",
+          mixBlendMode: isBlend ? "difference" : "normal",
+          color: isBlend ? "#ffffff" : "var(--heading)",
         }}
       >
         <div
@@ -68,7 +72,7 @@ export default function Navbar() {
               letterSpacing: "0.18em",
               textTransform: "uppercase",
               textDecoration: "none",
-              color: "var(--heading)",
+              color: "inherit",
               flexShrink: 0,
             }}
           >
@@ -106,7 +110,7 @@ export default function Navbar() {
                 padding: "0.4rem",
                 display: "flex",
                 alignItems: "center",
-                color: "var(--heading)",
+                color: "inherit",
               }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -127,7 +131,7 @@ export default function Navbar() {
                 padding: "0.4rem 0.5rem",
                 display: "flex",
                 alignItems: "center",
-                color: "var(--heading)",
+                color: "inherit",
               }}
             >
               {/* Bag icon */}
@@ -177,7 +181,7 @@ export default function Navbar() {
             {/* Shop CTA - desktop only */}
             <Link
               href="/products"
-              className="btn btn-dark hide-mobile"
+              className={`btn hide-mobile ${isBlend ? 'btn-blend' : 'btn-dark'}`}
               style={{ padding: "0.55rem 1.25rem", fontSize: "0.68rem" }}
             >
               Shop Collection
@@ -205,7 +209,7 @@ export default function Navbar() {
                     display: "block",
                     width: "22px",
                     height: "1.5px",
-                    background: "var(--heading)",
+                    background: "currentColor",
                     transition: "transform 0.25s, opacity 0.25s",
                     transform: open
                       ? i === 0
@@ -318,14 +322,24 @@ export default function Navbar() {
           letter-spacing: 0.14em;
           text-transform: uppercase;
           text-decoration: none;
-          color: var(--body);
+          color: inherit;
+          opacity: 0.7;
           padding-bottom: 2px;
           border-bottom: 1.5px solid transparent;
-          transition: color 0.2s, border-color 0.2s;
+          transition: opacity 0.2s, border-color 0.2s;
         }
         .nav-link:hover {
-          color: var(--heading);
-          border-bottom-color: var(--brass);
+          opacity: 1;
+          border-bottom-color: currentColor;
+        }
+        .btn-blend {
+          border: 1.5px solid currentColor;
+          background: transparent;
+          color: inherit;
+        }
+        .btn-blend:hover {
+          background: currentColor;
+          color: #000;
         }
         @keyframes badgePop {
           0%   { transform: scale(0.5); }
